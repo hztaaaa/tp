@@ -1,0 +1,109 @@
+
+
+{php}$user=session('name');{/php}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HT论坛</title>
+    <link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+    <link href="__CSS__/site.min.css" rel="stylesheet">
+    <style>
+        .container  .row .col-lg-4 img{ display: block; margin-left: auto; margin-right: auto; }
+        .container .row .col-lg-4 h3,p{ text-align: center; }
+        .row .col-lg-4 .button{ width: 360px; margin-left: 150px; margin-bottom: 10px;}
+    </style>
+</head>
+<body>
+<!--导航栏-->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand hidden-sm" href="index.html">HT.返回主页</a>
+        </div>
+        <div class="navbar-header" style="display:none;">
+            <a class="navbar-brand hidden-sm" href=""></a>
+        </div>
+    </div>
+</div>
+<!--导航栏结束-->
+<!--巨幕-->
+<div class="jumbotron masthead">
+    <div class="container">
+        <h1>HT论坛</h1>
+        <h2>简单的论坛功能</h2>
+        <p class="masthead-button-links">
+        <form class="form-inline" action="<?=url('index/sousu')?>" method="post" >
+            <div class="form-group">
+                <input type="text" class="form-control" id="exampleInputName2" placeholder="输入搜索内容" name="key" value="">
+                <button class="btn btn-default" type="submit" name="">搜索</button>
+                <?php if (!isset($user) || !$user) :?>
+                <a href="<?=url('index/register')?>"><button type="button" class="btn btn-primary btn-default" data-toggle="modal">  注册  </button></a>
+                <a href="<?=url('index/login')?>"><button type="button" class="btn btn-primary btn-default" data-toggle="modal">  登录  </button></a>
+                <?php else :?>
+                <a href="register.html"><button type="button" class="btn btn-primary btn-default" data-toggle="modal"> {php}echo $user;{/php}  </button></a>
+                <a href="/tp5/public/index/index/ft"><button type="button" class="btn btn-primary btn-default" data-toggle="modal">  发帖  </button></a>
+                <a href="/tp5/public/index/index/logut"onclick="return confirm('你确定要退出吗?')"><button type="button" class="btn btn-primary btn-default" data-toggle="modal">  退出  </button></a>
+                <?php endif;?>
+            </div>
+        </form>
+        </p>
+    </div>
+</div>
+<!--巨幕结束-->
+<!-- 模态框 -->
+
+<!--模态框结束-->
+<div class="container projects">
+    <!--信息展示-->
+    <?php if(!isset($roc))  :?>
+    <div class="projects-header page-header">
+        <h2>帖子展示</h2>
+        <p>将帖子展示在页面中</p>
+    </div>
+    <div class="row">
+
+        {volist name='list' id='user'}
+
+        <div class="col-lg-4">
+            <h5 style="color: red">版主：{$user.admin}</h5>
+            <h3>{$user.txt}</h3>
+            <div class="button">
+                <a href="<?=url('index/demo',['id'=>$user['id']])?>"><button type="button" class="btn btn-primary btn-default" data-toggle="modal" data-target="#myModal">  详情 </button></a>
+            </div>
+        </div>
+        {/volist}
+
+    </div>
+    <div style="text-align: center">{$page}</div>
+    <?php else :?>
+    <div class="projects-header page-header">
+        <h2>帖子搜索.展示</h2>
+        <p>搜索相关的主题贴</p>
+    </div>
+    {foreach $roc as $n}
+    <div class="col-lg-4">
+        <h6>版主：{$n.admin}</h6>
+        <h3>{$n.id}.：{$n['txt']}</h3>
+        <div class="button">
+            <a href="<?=url('index/demo',['id'=>$n['id']])?>"><button type="button" class="btn btn-primary btn-default" data-toggle="modal" data-target="#myModal">  详情 </button></a>
+        </div>
+    </div>
+    {/foreach}
+    <?php endif;?>
+    <footer class="footer  container">
+        <div class="row footer-bottom">
+            <ul class="list-inline text-center">
+                <h4><a href="http://ppops.top" target="_blank">class.imooc.com</a> | HT论坛</h4>
+            </ul>
+        </div>
+
+    </footer>
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+{php}
+$id=input('id');
+{/php}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>详情</title>
+    <link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+    <link href="__CSS__/site.min.css" rel="stylesheet">
+
+    <style>
+        .container  .row .col-lg-4 img{ display: block; margin-left: auto; margin-right: auto; }
+        .container .row .col-lg-4 h3,p{ text-align: center; }
+        .row .col-lg-4 .button{ width: 360px; margin-left: 150px; margin-bottom: 10px;}
+    </style>
+</head>
+
+<body>
+<div class="container projects">
+    <div class="projects-header page-header">
+        <h2>{foreach $row as $n}{$n.txt}{/foreach}</h2>
+        <p>将详情内容展示在页面中</p>
+    </div>
+    <!--导航栏-->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand hidden-sm" href="<?=url('index/index')?>">返回.HT论坛</a>
+            </div>
+            <div class="navbar-header" style="display:none;">
+                <a class="navbar-brand hidden-sm" href=""></a>
+            </div>
+        </div>
+    </div>
+    <h4 style="line-height: 30px;">{foreach $row as $n}{$n.text}{/foreach}</h4>
+    <!--导航栏结束-->
+    <!--巨幕-->
+    <hr>
+    <p>回帖</p>
+    {foreach $row1 as $n1}<h6 id="">发布人 {$n1.admin} ：{$n1.text}</h6>{/foreach}
+    <h6 id="bt1"></h6>
+
+    <hr>
+    <div>
+
+
+                <input type="text" id="text" class="form-control" placeholder="请输入标题" name="text">
+                <button type="submit" class="btn btn-primary btn-default" id="btn">提交</button>
+
+    </div>
+    <footer class="footer  container">
+        <div class="row footer-bottom">
+            <ul class="list-inline text-center">
+                <h4><a href="http://ppops.top" target="_blank">ppops.top</a> | HT论坛</h4>
+            </ul>
+        </div>
+    </footer>
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <div id="bt"></div>
+    <script type="text/javascript">
+
+
+        $("#btn").click(
+            function () {
+             var text =$('#text').val();
+
+
+
+
+
+                $.ajax({
+                    contentType:'application/json;charset=UTF-8',
+                    scriptCharset:"utf-8",
+                    'url': "{:url('index/ajax')}",
+                    'data': {'pl':text,'id':'{php}echo $id{/php}'},
+
+                    'success': function (data) {
+                        $("#bt1").append(data);
+                    },
+
+                });
+            });
+    </script>
+</div>
+</body>
+
+</html>
